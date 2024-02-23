@@ -3,7 +3,7 @@
   "features": [
     {
       "type": "Feature",
-      "properties": { "line-color": "#123400", "line-name": "文湖線" },
+      "properties": { "line-color": "#c48c31", "line-name": "文湖線" },
       "geometry": {
         "type": "LineString",
         "coordinates": [
