@@ -25,19 +25,41 @@ onMounted(() => {
         // Add the image to the map style.
         map.addImage("cat", image);
 
-        map.addSource("taipeiMetro", {
+        map.addSource("taipeiMetroStations", {
           type: "geojson",
-          data: "/taipei-metro.geojson",
+          data: "/taipei-metro-stations.geojson",
+        });
+
+        map.addSource("taipeiMetroLines", {
+          type: "geojson",
+          data: "/taipei-metro-lines.geojson",
         });
 
         map.addLayer({
-          source: "taipeiMetro",
+          source: "taipeiMetroStations",
           id: "stations",
           type: "circle",
           paint: {
-            'circle-radius': 6,
-            'circle-color': ['get', 'marker-color'] // Use the 'marker-color' property
+            "circle-radius": 6,
+            "circle-color": "#ffffff",
+            "circle-stroke-color": ["get", "marker-color"],
+            // Set the width of the circle's stroke
+            "circle-stroke-width": 2,
           },
+        });
+
+        map.addLayer({
+          'id': 'lines',
+          'type': 'line',
+          'source': 'taipeiMetroLines',
+          'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          'paint': {
+            'line-color': ['get', 'line-color'],
+            'line-width': 3
+          }
         });
       }
     );
