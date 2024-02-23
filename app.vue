@@ -10,10 +10,10 @@ const config = useRuntimeConfig();
 onMounted(() => {
   mapboxgl.accessToken = config.public.mapboxAccessToken;
   const map = new mapboxgl.Map({
-    container: "map", // container ID
-    style: "mapbox://styles/mapbox/standard", // style URL
-    center: [121.497366, 25.09497], // starting position [lng, lat]
-    zoom: 11, // starting zoom
+    container: "map",
+    style: "mapbox://styles/scooter-scooter/clsxzs3ch004l01py13e1ddhs",
+    center: [121.497366, 25.09497],
+    zoom: 11,
   });
 
   map.on("load", () => {
@@ -33,11 +33,10 @@ onMounted(() => {
         map.addLayer({
           source: "taipeiMetro",
           id: "stations",
-          type: "symbol",
-          layout: {
-            "icon-image": "cat", // reference the image
-            "icon-size": 0.1,
-            "icon-allow-overlap": true
+          type: "circle",
+          paint: {
+            'circle-radius': 6,
+            'circle-color': ['get', 'marker-color'] // Use the 'marker-color' property
           },
         });
       }
