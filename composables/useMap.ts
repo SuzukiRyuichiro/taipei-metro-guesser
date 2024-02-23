@@ -42,7 +42,7 @@ export function useMap() {
           "circle-color": "#ffffff",
           "circle-stroke-color": ["get", "marker-color"],
           // Set the width of the circle's stroke
-          "circle-stroke-width": 2,
+          "circle-stroke-width": 1,
         },
       });
 
@@ -57,7 +57,7 @@ export function useMap() {
           },
           paint: {
             "line-color": ["get", "line-color"],
-            "line-width": 3,
+            "line-width": 2,
           },
         },
         "stations"
@@ -139,7 +139,7 @@ export function useMap() {
           ["get", "nameEn"],
           { "font-scale": 0.6 },
         ], // Use the appropriate property from your data
-        "text-size": 14,
+        "text-size": 20,
         "text-offset": [0, 1.7], // Adjust as needed for label positioning
       },
       paint: {
