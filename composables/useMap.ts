@@ -142,6 +142,10 @@ export function useMap() {
         "text-size": 14,
         "text-offset": [0, 1.7], // Adjust as needed for label positioning
       },
+      paint: {
+        "text-halo-color": "#f1f1f1",
+        "text-halo-width": 2,
+      },
     });
   };
 

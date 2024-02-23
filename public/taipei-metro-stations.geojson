@@ -545,7 +545,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [121.543551, 25.032943]
+        "coordinates": [121.543561, 25.032943]
       },
       "properties": {
         "車站編號": "R05",
