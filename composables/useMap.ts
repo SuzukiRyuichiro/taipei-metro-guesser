@@ -130,9 +130,17 @@ export function useMap() {
       type: "symbol",
       source: stationCode, // Same source as the circle layer
       layout: {
-        "text-field": ["get", "nameEn"], // Use the appropriate property from your data
+        "text-field": [
+          "format",
+          ["get", "nameTw"],
+          { "font-scale": 0.8 },
+          "\n",
+          {},
+          ["get", "nameEn"],
+          { "font-scale": 0.6 },
+        ], // Use the appropriate property from your data
         "text-size": 14,
-        "text-offset": [0, 1.5], // Adjust as needed for label positioning
+        "text-offset": [0, 1.7], // Adjust as needed for label positioning
       },
     });
   };
