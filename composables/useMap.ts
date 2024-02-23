@@ -114,10 +114,10 @@ export function useMap() {
       paint: {
         "circle-radius": {
           stops: [
-            [5, 2], // At zoom level 5, circles have a radius of 2 pixels
-            [10, 4], // At zoom level 10, increase the radius to 4 pixels
-            [15, 8], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
-            [20, 12], // At zoom level 20 (very close), increase to 12 pixels
+            [5, 1], // At zoom level 5, circles have a radius of 2 pixels
+            [10, 3], // At zoom level 10, increase the radius to 4 pixels
+            [15, 7], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
+            [20, 11], // At zoom level 20 (very close), increase to 12 pixels
           ],
         },
         "circle-color": "#3f3f3f",
