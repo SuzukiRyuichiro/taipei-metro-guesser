@@ -90,6 +90,7 @@ export function useMap() {
     nameEn: string;
     nameTw: string;
   }) => {
+    console.log({ color });
     map.value?.addSource(stationCode, {
       type: "geojson",
       data: {
@@ -119,7 +120,19 @@ export function useMap() {
             [20, 12], // At zoom level 20 (very close), increase to 12 pixels
           ],
         },
-        "circle-color": ["get", "color"],
+        "circle-color": "#3f3f3f",
+      },
+    });
+
+    map.value?.addLayer({
+      id: `${stationCode}Label`,
+      minzoom: 12,
+      type: "symbol",
+      source: stationCode, // Same source as the circle layer
+      layout: {
+        "text-field": ["get", "nameEn"], // Use the appropriate property from your data
+        "text-size": 14,
+        "text-offset": [0, 1.5], // Adjust as needed for label positioning
       },
     });
   };
