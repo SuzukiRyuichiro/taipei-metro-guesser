@@ -77,5 +77,52 @@ export function useMap() {
     });
   };
 
-  return { map, flyTo };
+  const addAnsweredStationFill = ({
+    coordinates,
+    color,
+    stationCode,
+    nameEn,
+    nameTw,
+  }: {
+    coordinates: number[];
+    color: string;
+    stationCode: string;
+    nameEn: string;
+    nameTw: string;
+  }) => {
+    map.value?.addSource(stationCode, {
+      type: "geojson",
+      data: {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: coordinates,
+        },
+        properties: {
+          nameEn,
+          nameTw,
+          color,
+        },
+      },
+    });
+
+    map.value?.addLayer({
+      source: stationCode,
+      id: `${stationCode}Filled`,
+      type: "circle",
+      paint: {
+        "circle-radius": {
+          stops: [
+            [5, 2], // At zoom level 5, circles have a radius of 2 pixels
+            [10, 4], // At zoom level 10, increase the radius to 4 pixels
+            [15, 8], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
+            [20, 12], // At zoom level 20 (very close), increase to 12 pixels
+          ],
+        },
+        "circle-color": ["get", "color"],
+      },
+    });
+  };
+
+  return { map, flyTo, addAnsweredStationFill };
 }

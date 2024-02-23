@@ -10,27 +10,26 @@
 </template>
 
 <script setup lang="ts" async>
-import nuxtStorage from 'nuxt-storage';
+import nuxtStorage from "nuxt-storage";
 
-const { fetchTaipeiMetroData, findStationCoordinates } = useTaipeiMetro()
+const { fetchTaipeiMetroData, findStation } = useTaipeiMetro();
 const query = ref("");
-const { map, flyTo } = useMap();
+const { map, flyTo, addAnsweredStationFill } = useMap();
 
 const submit = async () => {
   // look through names
-  const stationData = nuxtStorage.localStorage.getData('station-data')
-  const coordinates = findStationCoordinates(stationData, query.value)
-  // if found, fly to the location and zoom on map, clear input
-  if (coordinates?.length == 2) {
-    flyTo(coordinates)
-    query.value = ""
-  }
-  // if not found, change the style fo the input and show error message
+  const stationData = nuxtStorage.localStorage.getData("station-data");
+  const station = findStation(stationData, query.value);
+
+  if (station === null) return;
+
+  const { coordinates, nameEn, nameTw, stationCode, color } = station;
+  flyTo(coordinates);
+  addAnsweredStationFill({ coordinates, nameEn, nameTw, stationCode, color });
+  query.value = "";
 };
 
 onMounted(async () => {
-  await fetchTaipeiMetroData()
+  await fetchTaipeiMetroData();
 });
-
-
 </script>

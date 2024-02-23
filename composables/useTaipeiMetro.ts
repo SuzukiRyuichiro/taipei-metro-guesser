@@ -7,10 +7,16 @@ export const useTaipeiMetro = () => {
     nuxtStorage.localStorage.setData("station-data", data);
   };
 
-  const findStationCoordinates = (
+  const findStation = (
     stationData: object,
     searchString: string
-  ) => {
+  ): {
+    coordinates: number[];
+    nameEn: string;
+    nameTw: string;
+    stationCode: string;
+    color: string;
+  } | null => {
     // Normalize search string to lowercase for case-insensitive comparison
     const normalizedSearchString = searchString.toLowerCase();
 
@@ -21,7 +27,13 @@ export const useTaipeiMetro = () => {
         const nameTwLower = station.name_tw.toLowerCase();
 
         if ([nameEnLower, nameTwLower].includes(normalizedSearchString)) {
-          return station.coordinates;
+          return {
+            coordinates: station.coordinates,
+            nameEn: station.name_en,
+            nameTw: station.name_tw,
+            stationCode: stationCode,
+            color: station.color,
+          };
         }
       }
     }
@@ -30,5 +42,5 @@ export const useTaipeiMetro = () => {
     return null;
   };
 
-  return { fetchTaipeiMetroData, findStationCoordinates };
+  return { fetchTaipeiMetroData, findStation };
 };
