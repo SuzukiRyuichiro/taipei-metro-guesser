@@ -139,7 +139,7 @@ export function useMap() {
           ["get", "nameEn"],
           { "font-scale": 0.6 },
         ], // Use the appropriate property from your data
-        "text-size": 14,
+        "text-size": 20,
         "text-offset": [0, 1.7], // Adjust as needed for label positioning
       },
       paint: {
