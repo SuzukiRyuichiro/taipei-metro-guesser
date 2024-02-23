@@ -14,7 +14,7 @@ import nuxtStorage from 'nuxt-storage';
 
 const { fetchTaipeiMetroData, findStationCoordinates } = useTaipeiMetro()
 const query = ref("");
-const { map } = useMap();
+const { map, flyTo } = useMap();
 
 const submit = async () => {
   // look through names
@@ -22,7 +22,7 @@ const submit = async () => {
   const coordinates = findStationCoordinates(stationData, query.value)
   // if found, fly to the location and zoom on map, clear input
   if (coordinates?.length == 2) {
-    fly(coordinates)
+    flyTo(coordinates)
     query.value = ""
   }
   // if not found, change the style fo the input and show error message
@@ -32,12 +32,5 @@ onMounted(async () => {
   await fetchTaipeiMetroData()
 });
 
-const fly = (coordinates: number[]) => {
-  map.value.flyTo({
-    center: coordinates,
-    zoom: 17,
-    speed: 1.5,
-    essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-  });
-};
+
 </script>

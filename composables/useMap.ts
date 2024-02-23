@@ -63,13 +63,19 @@ export function useMap() {
         "stations"
       );
 
-      const bounds = [
-        [116.37, 20.65], // Southwest corner: slightly west and south of Taipei
-        [125.0313941, 26.954149], // Northeast corner: slightly east and north of Taipei
-      ];
+      const bounds = [116.37, 20.65, 125.0313941, 26.954149];
       map.value.setMaxBounds(bounds);
     });
   });
 
-  return { map };
+  const flyTo = (coordinates: number[]) => {
+    map.value.flyTo({
+      center: coordinates,
+      zoom: 17,
+      speed: 1.5,
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  };
+
+  return { map, flyTo };
 }
