@@ -8,12 +8,14 @@ export function useMap() {
     mapboxgl.accessToken = config.public.mapboxAccessToken;
     map.value = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/scooter-scooter/clsxzs3ch004l01py13e1ddhs",
+      style: "mapbox://styles/scooter-scooter/clsyl4h1v004501rab7d80cet",
       center: [121.52, 25.07],
       zoom: 11,
     });
 
     map.value.on("load", () => {
+      if (map.value == null) return;
+
       map.value.addSource("taipeiMetroStations", {
         type: "geojson",
         data: "/taipei-metro-stations.geojson",
@@ -44,19 +46,28 @@ export function useMap() {
         },
       });
 
-      map.value.addLayer({
-        id: "lines",
-        type: "line",
-        source: "taipeiMetroLines",
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
+      map.value.addLayer(
+        {
+          id: "lines",
+          type: "line",
+          source: "taipeiMetroLines",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round",
+          },
+          paint: {
+            "line-color": ["get", "line-color"],
+            "line-width": 3,
+          },
         },
-        paint: {
-          "line-color": ["get", "line-color"],
-          "line-width": 3,
-        },
-      });
+        "stations"
+      );
+
+      const bounds = [
+        [116.37, 20.65], // Southwest corner: slightly west and south of Taipei
+        [125.0313941, 26.954149], // Northeast corner: slightly east and north of Taipei
+      ];
+      map.value.setMaxBounds(bounds);
     });
   });
 

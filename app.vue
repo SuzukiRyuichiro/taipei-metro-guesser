@@ -36,7 +36,7 @@ const fly = (coordinates: number[]) => {
   map.value.flyTo({
     center: coordinates,
     zoom: 17,
-    speed: 2,
+    speed: 1.5,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
 };

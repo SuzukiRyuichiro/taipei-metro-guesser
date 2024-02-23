@@ -25,3 +25,6 @@ logs
 
 # Playground
 playground
+
+# Local Netlify folder
+.netlify
