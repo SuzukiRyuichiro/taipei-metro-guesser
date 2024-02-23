@@ -12,7 +12,7 @@ onMounted(() => {
   const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/scooter-scooter/clsxzs3ch004l01py13e1ddhs",
-    center: [121.497366, 25.09497],
+    center: [121.52, 25.07],
     zoom: 11,
   });
 
@@ -32,7 +32,14 @@ onMounted(() => {
       id: "stations",
       type: "circle",
       paint: {
-        "circle-radius": 6,
+        "circle-radius": {
+          stops: [
+            [5, 2], // At zoom level 5, circles have a radius of 2 pixels
+            [10, 4], // At zoom level 10, increase the radius to 4 pixels
+            [15, 8], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
+            [20, 12], // At zoom level 20 (very close), increase to 12 pixels
+          ],
+        },
         "circle-color": "#ffffff",
         "circle-stroke-color": ["get", "marker-color"],
         // Set the width of the circle's stroke
