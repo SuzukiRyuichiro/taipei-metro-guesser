@@ -42,7 +42,7 @@ export function useMap() {
           "circle-color": "#ffffff",
           "circle-stroke-color": ["get", "marker-color"],
           // Set the width of the circle's stroke
-          "circle-stroke-width": 2,
+          "circle-stroke-width": 1,
         },
       });
 
@@ -57,7 +57,7 @@ export function useMap() {
           },
           paint: {
             "line-color": ["get", "line-color"],
-            "line-width": 3,
+            "line-width": 2,
           },
         },
         "stations"
@@ -114,10 +114,10 @@ export function useMap() {
       paint: {
         "circle-radius": {
           stops: [
-            [5, 2], // At zoom level 5, circles have a radius of 2 pixels
-            [10, 4], // At zoom level 10, increase the radius to 4 pixels
-            [15, 8], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
-            [20, 12], // At zoom level 20 (very close), increase to 12 pixels
+            [5, 1], // At zoom level 5, circles have a radius of 2 pixels
+            [10, 3], // At zoom level 10, increase the radius to 4 pixels
+            [15, 7], // At zoom level 15, further increase to 8 pixels for visibility when zoomed in
+            [20, 11], // At zoom level 20 (very close), increase to 12 pixels
           ],
         },
         "circle-color": "#3f3f3f",
@@ -139,7 +139,7 @@ export function useMap() {
           ["get", "nameEn"],
           { "font-scale": 0.6 },
         ], // Use the appropriate property from your data
-        "text-size": 14,
+        "text-size": 20,
         "text-offset": [0, 1.7], // Adjust as needed for label positioning
       },
       paint: {
