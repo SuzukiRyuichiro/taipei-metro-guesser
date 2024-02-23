@@ -57,7 +57,7 @@ export function useMap() {
           },
           paint: {
             "line-color": ["get", "line-color"],
-            "line-width": 3,
+            "line-width": 2,
           },
         },
         "stations"
