@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-row gap-2 bg-slate-200">
     <CompletionDoughnut
-      v-for="{ id, color, total, completed, lineAcronym } in hello"
+      v-for="(
+        { id, color, total, completed, lineAcronym }, lineName
+      ) in completionData"
       :key="id"
       :color="color"
       :total="total"
@@ -12,10 +14,32 @@
 </template>
 
 <script lang="ts" setup>
-const hello = [
-  { id: 1, color: "#ff0000", total: 20, completed: 1, lineAcronym: 'BL' },
-  { id: 2, color: "#00ff00", total: 20, completed: 8, lineAcronym: 'R' },
-  { id: 3, color: "#23ee00", total: 20, completed: 19, lineAcronym: 'Y' },
-  { id: 4, color: "#10e24f", total: 20, completed: 10, lineAcronym: 'O' },
-];
+import nuxtStorage from "nuxt-storage";
+const stationData = computed(() => {
+  return nuxtStorage.localStorage.getData("station-data");
+});
+
+const { allStationsFound } = defineProps<{
+  allStationsFound: object;
+}>();
+
+const completionData = computed(() => {
+  const lines = Object.keys(stationData.value);
+  if (lines == null) return {};
+
+  const obj = {};
+
+  lines.forEach((line, index) => {
+    const color = Object.values(stationData.value[line])[0].color;
+    const total = Object.values(stationData.value[line]).length;
+    const completed = Object.values(allStationsFound[line] || 0).length;
+    const lineAcronym = Object.keys(stationData.value[line])[0].match(
+      /^[A-Za-z]{1,2}/
+    )[0];
+
+    obj[line] = { color, total, completed, lineAcronym, id: index };
+  });
+
+  return obj;
+});
 </script>

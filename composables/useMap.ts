@@ -69,7 +69,7 @@ export function useMap() {
   });
 
   const flyTo = (coordinates: number[]) => {
-    map.value.flyTo({
+    map.value?.flyTo({
       center: coordinates,
       zoom: 17,
       speed: 1.5,
@@ -90,7 +90,6 @@ export function useMap() {
     nameEn: string;
     nameTw: string;
   }) => {
-    console.log({ color });
     map.value?.addSource(stationCode, {
       type: "geojson",
       data: {

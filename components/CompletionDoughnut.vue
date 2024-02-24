@@ -8,6 +8,13 @@
 import { Chart as ChartJS, ArcElement } from "chart.js";
 import { Doughnut } from "vue-chartjs";
 
+const props = defineProps<{
+  color: string;
+  total: number;
+  completed: number;
+  lineAcronym: string;
+}>();
+
 ChartJS.register(ArcElement);
 ChartJS.register({
   id: "drawInside",
@@ -38,19 +45,13 @@ ChartJS.register({
   },
 });
 
-const props = defineProps<{
-  color: string;
-  total: number;
-  completed: number;
-  lineAcronym: string;
-}>();
-
 const chartData = computed(() => ({
   datasets: [
     {
       lineAcronym: props.lineAcronym,
       backgroundColor: ["#fff", props.color], // Directly access props.color
       data: [props.total - props.completed, props.completed], // Directly use props.total and props.completed
+      labels: ['Not Answered', 'Answered'],
       cutout: "80%",
     },
   ],
