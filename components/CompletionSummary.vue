@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row gap-2 bg-slate-200">
+  <div class="flex flex-row gap-2 bg-slate-300/50 p-4 rounded shadow-sm">
     <CompletionDoughnut
       v-for="(
         { id, color, total, completed, lineAcronym }, lineName

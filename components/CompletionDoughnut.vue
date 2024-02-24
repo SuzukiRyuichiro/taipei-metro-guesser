@@ -1,5 +1,5 @@
 <template>
-  <div class="w-16 h-16">
+  <div class="sm:w-16 sm:h-16 w-10 h-10">
     <Doughnut :data="chartData" :options="options" />
   </div>
 </template>
@@ -21,7 +21,14 @@ ChartJS.register({
   beforeDatasetDraw(chart, args, pluginOptions) {
     const { ctx, data, config, chartArea } = chart;
     ctx.save();
-    ctx.font = "bold 24px sans-serif";
+    const baseSize = Math.min(
+      chartArea.right - chartArea.left,
+      chartArea.bottom - chartArea.top
+    );
+    const fontSize = Math.max(12, baseSize / 4); // Adjust the divisor to control the scale
+
+    // Apply the responsive font size
+    ctx.font = `bold ${fontSize}px sans-serif`;
 
     // draw circle
     const centerX = (chartArea.left + chartArea.right) / 2;
@@ -51,7 +58,7 @@ const chartData = computed(() => ({
       lineAcronym: props.lineAcronym,
       backgroundColor: ["#fff", props.color], // Directly access props.color
       data: [props.total - props.completed, props.completed], // Directly use props.total and props.completed
-      labels: ['Not Answered', 'Answered'],
+      labels: ["Not Answered", "Answered"],
       cutout: "80%",
     },
   ],
