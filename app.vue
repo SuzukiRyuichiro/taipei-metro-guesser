@@ -1,12 +1,19 @@
 <template>
-  <input
+  <label
     ref="input"
-    type="text"
-    placeholder="Station"
-    v-on:keyup.enter="submit"
-    v-model="query"
-    class="absolute -translate-x-2/4 top-4 left-1/2 shadow-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-8/12 p-2.5"
-  />
+    for="search"
+    class="absolute p-2.5 -translate-x-2/4 top-4 left-1/2 shadow-md bg-gray-50 flex whitespace-nowrap items-center justify-between gap-3 border border-gray-300 text-gray-900 text-sm rounded-full w-8/12"
+  >
+    <input
+      name="search"
+      type="text"
+      placeholder="Station"
+      v-on:keyup.enter="submit"
+      v-model="query"
+      class="w-full h-6 bg-inherit px-2 outline-none"
+    />
+    <search-icon></search-icon>
+  </label>
   <div id="map" class="h-screen"></div>
 </template>
 
@@ -24,11 +31,11 @@ const submit = async () => {
   const stationsFound = findStations(stationData, query.value);
 
   if (Object.keys(stationsFound).length === 0) {
-    input.value?.classList.add("animate-shake", "shadow-red-500/50");
+    input.value?.classList.add("animate-shake", "shadow-red-500/50", "border-red-500");
     setTimeout(() => {
-      input.value?.classList.remove("animate-shake", "shadow-red-500/50");
+      input.value?.classList.remove("animate-shake", "shadow-red-500/50", "border-red-500");
     }, 2000);
-    return
+    return;
   }
 
   Object.keys(stationsFound).forEach((lineName) => {
