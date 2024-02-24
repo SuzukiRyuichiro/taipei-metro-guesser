@@ -1,20 +1,21 @@
 <template>
   <label
-    ref="input"
-    for="search"
-    class="absolute p-2.5 -translate-x-2/4 top-4 left-1/2 shadow-md bg-gray-50 flex whitespace-nowrap items-center justify-between gap-3 border border-gray-300 text-gray-900 text-sm rounded-full w-8/12"
+  ref="input"
+  for="search"
+  class="absolute p-2.5 -translate-x-2/4 top-4 left-1/2 shadow-md bg-gray-50 flex whitespace-nowrap items-center justify-between gap-3 border border-gray-300 text-gray-900 text-sm rounded-full w-10/12 sm:w-8/12"
   >
-    <input
-      name="search"
-      type="text"
-      placeholder="Station"
-      v-on:keyup.enter="submit"
-      v-model="query"
-      class="w-full h-6 bg-inherit px-2 outline-none"
-    />
-    <search-icon></search-icon>
-  </label>
-  <div id="map" class="h-screen"></div>
+  <input
+  name="search"
+  type="text"
+  placeholder="Station"
+  v-on:keyup.enter="submit"
+  v-model="query"
+  class="w-full h-6 bg-inherit px-2 outline-none"
+  />
+  <SearchIcon></SearchIcon>
+</label>
+<div id="map" class="h-screen"></div>
+<CompletionSummary class="absolute bottom-3 -translate-x-2/4 left-1/2 rounded" ></CompletionSummary>
 </template>
 
 <script setup lang="ts" async>
@@ -31,9 +32,17 @@ const submit = async () => {
   const stationsFound = findStations(stationData, query.value);
 
   if (Object.keys(stationsFound).length === 0) {
-    input.value?.classList.add("animate-shake", "shadow-red-500/50", "border-red-500");
+    input.value?.classList.add(
+      "animate-shake",
+      "shadow-red-500/50",
+      "border-red-500"
+    );
     setTimeout(() => {
-      input.value?.classList.remove("animate-shake", "shadow-red-500/50", "border-red-500");
+      input.value?.classList.remove(
+        "animate-shake",
+        "shadow-red-500/50",
+        "border-red-500"
+      );
     }, 2000);
     return;
   }
