@@ -13,7 +13,7 @@
 <script setup lang="ts" async>
 import nuxtStorage from "nuxt-storage";
 
-const { fetchTaipeiMetroData, findStation } = useTaipeiMetro();
+const { fetchTaipeiMetroData, findStations } = useTaipeiMetro();
 const query = ref("");
 const { map, flyTo, addAnsweredStationFill } = useMap();
 const input = ref<HTMLInputElement>();
@@ -21,18 +21,30 @@ const input = ref<HTMLInputElement>();
 const submit = async () => {
   // look through names
   const stationData = nuxtStorage.localStorage.getData("station-data");
-  const station = findStation(stationData, query.value);
+  const stationsFound = findStations(stationData, query.value);
 
-  if (station === null) {
+  if (Object.keys(stationsFound).length === 0) {
     input.value?.classList.add("animate-shake", "shadow-red-500/50");
     setTimeout(() => {
       input.value?.classList.remove("animate-shake", "shadow-red-500/50");
     }, 2000);
+    return
   }
 
-  const { coordinates, nameEn, nameTw, stationCode, color } = station;
-  flyTo(coordinates);
-  addAnsweredStationFill({ coordinates, nameEn, nameTw, stationCode, color });
+  Object.keys(stationsFound).forEach((lineName) => {
+    Object.keys(stationsFound[lineName]).forEach((stationCode) => {
+      const { coordinates, name_en, name_tw, color } =
+        stationsFound[lineName][stationCode];
+      flyTo(coordinates);
+      addAnsweredStationFill({
+        coordinates,
+        nameEn: name_en,
+        nameTw: name_tw,
+        stationCode,
+        color,
+      });
+    });
+  });
   query.value = "";
 };
 

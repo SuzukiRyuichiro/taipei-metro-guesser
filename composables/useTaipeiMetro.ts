@@ -1,4 +1,5 @@
 import nuxtStorage from "nuxt-storage";
+import type { StationData, StationDetails } from "../types/stationData";
 
 export const useTaipeiMetro = () => {
   const fetchTaipeiMetroData = async () => {
@@ -7,40 +8,36 @@ export const useTaipeiMetro = () => {
     nuxtStorage.localStorage.setData("station-data", data);
   };
 
-  const findStation = (
-    stationData: object,
+  const findStations = (
+    stationData: StationData,
     searchString: string
-  ): {
-    coordinates: number[];
-    nameEn: string;
-    nameTw: string;
-    stationCode: string;
-    color: string;
-  } | null => {
+  ): StationData => {
     // Normalize search string to lowercase for case-insensitive comparison
     const normalizedSearchString = searchString.toLowerCase();
 
-    for (const line of Object.values(stationData)) {
-      for (const stationCode of Object.keys(line)) {
-        const station = line[stationCode];
-        const nameEnLower = station.name_en.toLowerCase();
-        const nameTwLower = station.name_tw.toLowerCase();
+    const hits: StationData = {};
 
-        if ([nameEnLower, nameTwLower].includes(normalizedSearchString)) {
-          return {
-            coordinates: station.coordinates,
-            nameEn: station.name_en,
-            nameTw: station.name_tw,
-            stationCode: stationCode,
-            color: station.color,
-          };
+    Object.keys(stationData).forEach((lineName) => {
+      Object.keys(stationData[lineName]).forEach((stationCode) => {
+        const station = stationData[lineName][stationCode];
+        const { name_en, name_tw } = station;
+        if (
+          [name_en.toLowerCase(), name_tw.toLowerCase()].includes(
+            normalizedSearchString
+          )
+        ) {
+          // if there is no hit station in a line, initialize
+          if (hits[lineName] == null) {
+            hits[lineName] = {};
+          }
+          hits[lineName][stationCode] = station;
         }
-      }
-    }
+      });
+    });
 
     // Return null if no match is found
-    return null;
+    return hits;
   };
 
-  return { fetchTaipeiMetroData, findStation };
+  return { fetchTaipeiMetroData, findStations };
 };
