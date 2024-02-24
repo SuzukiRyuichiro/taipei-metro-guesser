@@ -105,8 +105,11 @@ const submit = async () => {
   query.value = "";
 };
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await fetchTaipeiMetroData();
+})
+
+onMounted(async () => {
   setTimeout(() => {
     goThroughStationDataAndFill(allStationsFound.value);
   }, 1000);

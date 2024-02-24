@@ -24,8 +24,8 @@ const { allStationsFound } = defineProps<{
 }>();
 
 const completionData = computed(() => {
+  if (!!!stationData.value) return {};
   const lines = Object.keys(stationData.value);
-  if (lines == null) return {};
 
   const obj = {};
 
