@@ -1,6 +1,5 @@
 <template>
-  <div class="h-screen overflow-hidden">
-    <div id="map" class="h-full relative">
+  <div class="h-screen overflow-hidden relative">
       <label
         ref="input"
         for="search"
@@ -20,6 +19,7 @@
         :allStationsFound="allStationsFound"
         class="absolute bottom-3 -translate-x-2/4 left-1/2 rounded"
       ></CompletionSummary>
+    <div id="map" class="h-full">
     </div>
   </div>
 </template>
