@@ -1,11 +1,10 @@
-import mapboxgl, { type LngLatBoundsLike } from "mapbox-gl";
+import mapboxgl, { type LngLatBoundsLike, type LngLatLike } from "mapbox-gl";
 
 export function useMap() {
   const map = ref<mapboxgl.Map | null>(null);
   const config = useRuntimeConfig();
 
   const colorMap = {
-    airport: "#d4cde7",
     blue: "#007ec7",
     brown: "#A74C00",
     green: "#1e7b54",
@@ -76,7 +75,7 @@ export function useMap() {
     });
   });
 
-  const flyTo = (coordinates: number[]) => {
+  const flyTo = (coordinates: LngLatLike) => {
     map.value?.flyTo({
       center: coordinates,
       zoom: 17,
